@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "gWvv/7vTihMi4QkgyhrIbqzjeuS2M3KRoylpxROz6W5i754i9205pJZ2PleyEKhn+/F9Li19ing+aGsGBggjaA==",
+  "success": true,
+  "projectFilePath": "/Users/omerokumus/WorkSpace/DotNetCore/YouTube-DotNetCoreForBeginners/GameStore/GameStore.Api/GameStore.Api.csproj",
+  "expectedPackageFiles": [
+    "/Users/omerokumus/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/omerokumus/.nuget/packages/minimalapis.extensions/0.11.0/minimalapis.extensions.0.11.0.nupkg.sha512",
+    "/Users/omerokumus/.nuget/packages/minivalidation/0.8.0/minivalidation.0.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}
