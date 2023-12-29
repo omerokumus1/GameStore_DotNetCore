@@ -1,8 +1,8 @@
 using GameStore.Api.Entities;
 
-namespace GameStore.Api.Repositories;   
+namespace GameStore.Api.Repositories;
 
-public class GamesRepository
+public class GamesRepository : IGamesRepository
 {
     private readonly List<Game> games = new() {
         new Game()
@@ -39,10 +39,11 @@ public class GamesRepository
 
     public Game? GetById(int id) => games.Find(g => g.Id == id);
 
-    public void Create(Game game)
+    public Game Create(Game game)
     {
         game.Id = games.Max(g => g.Id) + 1;
         games.Add(game);
+        return game;
     }
 
     public void Update(Game game)
@@ -56,7 +57,8 @@ public class GamesRepository
         games[games.IndexOf(existingGame)] = game;
     }
 
-    public void Delete(int id) {
+    public void Delete(int id)
+    {
         Game? existingGame = games.Find(g => g.Id == id);
         if (existingGame is null)
         {

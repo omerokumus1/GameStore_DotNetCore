@@ -5,7 +5,6 @@ namespace GameStore.Api.Endpoints;
 
 public static class GamesEndpoints
 {
-    static readonly GamesRepository repository = new();
 
 
     public static RouteGroupBuilder MapGamesEndpoints(this IEndpointRouteBuilder routes)
@@ -13,40 +12,41 @@ public static class GamesEndpoints
         var group = routes.MapGroup("/games")
             .WithParameterValidation();
 
-        group.MapGet("/", () => repository.GetAll());
+        group.MapGet("/", (IGamesRepository repository) =>
+            repository.GetAll().Select(game => game.AsDto()));
 
-        group.MapGet("/{id}", (int id) =>
+        group.MapGet("/{id}", (IGamesRepository repository, int id) =>
         {
             Game? game = repository.GetById(id);
             return game is not null
-                ? Results.Ok(game)
+                ? Results.Ok(game.AsDto())
                 : Results.NotFound();
 
         }).WithName("GetGameById");
 
-        group.MapPost("/", (Game game) =>
+        group.MapPost("/", (IGamesRepository repository, CreateGameDto game) =>
         {
-            repository.Create(game);
+            var gameCreated = repository.Create(game.AsEntity());
             return Results.CreatedAtRoute(
                 "GetGameById",
-                new { id = game.Id },
-                game);
+                new { id = gameCreated.Id },
+                gameCreated.AsDto());
         });
 
-        group.MapPut("/{id}", (int id, Game game) =>
+        group.MapPut("/{id}", (IGamesRepository repository, int id, UpdateGameDto updateGameDto) =>
         {
             Game? existingGame = repository.GetById(id);
             if (existingGame is null)
             {
                 return Results.NotFound();
             }
-            repository.Update(game);
+            repository.Update(updateGameDto.AsEntity());
 
             // return Results.Ok(game);
             return Results.NoContent(); // 204 No Content
         });
 
-        group.MapDelete("/{id}", (int id) =>
+        group.MapDelete("/{id}", (IGamesRepository repository, int id) =>
         {
             Game? existingGame = repository.GetById(id);
             if (existingGame is null)
