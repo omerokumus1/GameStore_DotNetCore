@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
-        .AddSingleton<IGamesRepository, GamesRepository>();
+        .AddScoped<IGamesRepository, EFGamesRepository>();
 
 var connString = builder.Configuration.GetConnectionString("GameStoreContext");
 builder.Services.AddSqlServer<GameStoreContext>(connString);
