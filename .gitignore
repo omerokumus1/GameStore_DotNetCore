@@ -1,5 +1,5 @@
 GameStore.Api/bin/
-GameStore.Api/obj
+GameStore.Api/obj/
 
 *.swp
 *.*~
